@@ -1,14 +1,11 @@
 
-import { Expense } from '../lib/types';
+import { useExpenseStore } from '../store/expenses';
 import { motion } from 'framer-motion';
 
-interface ExpenseListProps {
-  expenses: Expense[];
-  onDelete: (id: string) => void;
-}
+export function ExpenseList() {
+  const { expenses, deleteExpense } = useExpenseStore();
 
-export function ExpenseList({ expenses, onDelete }: ExpenseListProps) {
-  if (expenses.length === 0) {
+  if (!expenses || expenses.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500">
         No expenses yet. Add your first expense above!
@@ -31,11 +28,11 @@ export function ExpenseList({ expenses, onDelete }: ExpenseListProps) {
             <div className="text-sm text-gray-600">{expense.category}</div>
             <div className="text-xs text-gray-500">
               {new Date(expense.date).toLocaleDateString()}
-              {expense.note && ` • ${expense.note}`}
+              {expense.description && ` • ${expense.description}`}
             </div>
           </div>
           <button
-            onClick={() => onDelete(expense.id)}
+            onClick={() => deleteExpense(expense.id)}
             className="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-50 transition-colors"
           >
             <svg
