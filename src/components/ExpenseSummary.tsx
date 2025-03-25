@@ -6,12 +6,12 @@ import { formatCurrency } from "@/lib/utils"
 export function ExpenseSummary() {
   const expenses = useExpenseStore((state) => state.expenses)
 
-  const totalExpenses = expenses?.reduce((acc, expense) => acc + expense.amount, 0) || 0
+  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
 
-  const categoryTotals = expenses?.reduce((acc, expense) => {
+  const categoryTotals = expenses.reduce((acc, expense) => {
     acc[expense.category] = (acc[expense.category] || 0) + expense.amount
     return acc
-  }, {} as Record<string, number>) || {}
+  }, {} as Record<string, number>)
 
   const topCategories = Object.entries(categoryTotals)
     .sort(([, a], [, b]) => b - a)
@@ -25,20 +25,26 @@ export function ExpenseSummary() {
       <CardContent>
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-medium">Total Expenses</h3>
-            <p className="text-3xl font-bold text-emerald-600">
-              {formatCurrency(totalExpenses)}
+            <p className="text-sm font-medium text-muted-foreground">
+              Total Expenses
             </p>
+            <p className="text-2xl font-bold">{formatCurrency(totalExpenses)}</p>
           </div>
-          
           {topCategories.length > 0 && (
             <div>
-              <h3 className="text-lg font-medium mb-2">Top Categories</h3>
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Top Categories
+              </p>
               <div className="space-y-2">
                 {topCategories.map(([category, amount]) => (
-                  <div key={category} className="flex justify-between items-center">
-                    <span className="text-gray-600">{category}</span>
-                    <span className="font-medium">{formatCurrency(amount)}</span>
+                  <div
+                    key={category}
+                    className="flex items-center justify-between"
+                  >
+                    <span className="text-sm">{category}</span>
+                    <span className="text-sm font-medium">
+                      {formatCurrency(amount)}
+                    </span>
                   </div>
                 ))}
               </div>
