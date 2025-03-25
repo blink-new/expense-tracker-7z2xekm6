@@ -1,10 +1,16 @@
 
-import { ClerkProvider } from "@clerk/clerk-react"
-import { BrowserRouter as Router } from "react-router-dom"
-import { AppRoutes } from "./routes"
-import { Toaster } from "./components/ui/toaster"
+import { ClerkProvider } from "@clerk/clerk-react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AppRoutes } from "./routes";
+import { Toaster } from "@/components/ui/toaster";
+import "./App.css";
 
-const CLERK_PUBLISHABLE_KEY = "pk_test_Y3JlZGlibGUtZWZ0LTU0LmNsZXJrLmFjY291bnRzLmRldiQ"
+// Get the Clerk publishable key from environment variables
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
 
 function App() {
   return (
@@ -14,7 +20,7 @@ function App() {
         <Toaster />
       </Router>
     </ClerkProvider>
-  )
+  );
 }
 
-export default App
+export default App;
