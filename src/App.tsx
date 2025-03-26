@@ -3,8 +3,7 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AppRoutes } from "./routes";
 
-// Get your Clerk Publishable Key from the Clerk Dashboard
-const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const publishableKey = "pk_test_Y3JlZGlibGUtZWZ0LTU0LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 function App() {
   return (
